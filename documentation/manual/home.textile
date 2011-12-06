@@ -2,7 +2,7 @@ h1. Force.com Play! Module
 
 The Force.com Play! module allows you to easily build Play applications for Force.com users. The module provides Force.com authentication (using OAuth2) and a connector for the REST API. The module is currently in an early development stage.
 
-h2. <a name="started">Usage</a>
+h2. Usage
 
 Add the module as a dependency in <code>conf/dependencies.yml</code>
 
@@ -28,3 +28,8 @@ public class Application extends Controller {
 </code></pre>
 
 The user will be redirected to log in at Force.com and once authenticated, the Play! application can access the Force.com API on behalf of the user.
+
+h2. Reserved Routes
+
+The module will automatically add a new route on <code>/_auth</code>. Your application must not route to this path. It is reserved for the OAuth authentication flow.
+
