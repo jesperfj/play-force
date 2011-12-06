@@ -6,16 +6,14 @@ h2. <a name="started">Usage</a>
 
 Add the module as a dependency in <code>conf/dependencies.yml</code>
 
-<pre><code>
-require:
+<pre><code>require:
     - play
     - force -> 0.1
 </code></pre>
 
 Now you can write a secured controller like this:
 
-<pre><code>
-package controllers;
+<pre><code>package controllers;
 
 import play.modules.force.Force;
 import play.mvc.*;
