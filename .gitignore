@@ -1,3 +1,7 @@
+.classpath
+.settings
+.project
 lib
 dist
 *.pyc
+eclipse
