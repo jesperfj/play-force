@@ -1,0 +1,12 @@
+# Application dependencies
+
+require:
+    - play
+    - force -> force 0.1
+    
+repositories:
+    - My modules:
+        type:       local
+        artifact:   "${application.path}/../../dist/[module]-[revision].zip"
+        contains:
+            - force -> *
