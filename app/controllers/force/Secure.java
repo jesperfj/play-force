@@ -13,7 +13,8 @@ public class Secure extends Controller {
 	
 	static {
 		config = new ConnectorConfig();
-		config.setConnectUri(System.getenv("FORCE_URL"));
+		config.setOauthKey(System.getenv("FORCE_OAUTH_KEY"));
+		config.setOauthSecret(System.getenv("FORCE_OAUTH_SECRET"));
 		config.setOauthRedirectUri(System.getenv("APP_URI")+"/_auth");
 	}
 	

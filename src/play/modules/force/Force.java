@@ -8,7 +8,8 @@ public class Force {
 		try {
 			String[] parts = session.get("force_auth").split(" ");
 			ConnectorConfig c = new ConnectorConfig();
-			c.setConnectUri(System.getenv("FORCE_URL"));
+			c.setOauthKey(System.getenv("FORCE_OAUTH_KEY"));
+			c.setOauthSecret(System.getenv("FORCE_OAUTH_SECRET"));
 			c.setOauthRedirectUri(System.getenv("APP_URI")+"/_auth");
 			c.setSessionId(parts[0]);
 			c.setServiceHost(parts[1]);
