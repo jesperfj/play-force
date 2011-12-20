@@ -3,26 +3,20 @@ package controllers.force;
 import play.mvc.Before;
 import play.mvc.Controller;
 
-import com.sforce.oauth.Auth;
-import com.sforce.oauth.OAuthParam;
-import com.sforce.ws.ConnectorConfig;
+import com.force.api.ApiConfig;
+import com.force.api.Auth;
+import com.force.api.AuthorizationRequest;
 
 public class Secure extends Controller {
 
-	static final private ConnectorConfig config;
-	
-	static {
-		config = new ConnectorConfig();
-		config.setOauthKey(System.getenv("FORCE_OAUTH_KEY"));
-		config.setOauthSecret(System.getenv("FORCE_OAUTH_SECRET"));
-		config.setOauthRedirectUri(System.getenv("APP_URI")+"/_auth");
-	}
-	
 	@Before
 	public static void checkAuthenticated() {
 		if(session.get("force_auth")==null) {
-			redirect(Auth.startOAuthWebServerFlow(config,new OAuthParam()
-						.state(System.getenv("APP_URI")+request.url)));
+			redirect(Auth.startOAuthWebServerFlow(new AuthorizationRequest()
+		    	.apiConfig(new ApiConfig()
+				    	.setClientId(System.getenv("FORCE_OAUTH_KEY"))
+				    	.setRedirectURI(System.getenv("APP_URI")+"/_auth"))
+			    .state(System.getenv("APP_URI")+request.url)));
 		}
 	}
 }

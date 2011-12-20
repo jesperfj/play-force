@@ -1,4 +1,9 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-#{welcome /}
+<h1>All Accounts</h1>
+<ul>
+	#{list items:accounts, as:'account'}
+		<li>${account.name}</li>
+	#{/list}
+</ul>

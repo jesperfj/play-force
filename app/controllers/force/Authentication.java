@@ -2,24 +2,22 @@ package controllers.force;
 
 import play.mvc.Controller;
 
-import com.sforce.oauth.Auth;
-import com.sforce.ws.ConnectorConfig;
+import com.force.api.ApiConfig;
+import com.force.api.ApiSession;
+import com.force.api.Auth;
+import com.force.api.AuthorizationResponse;
 
 public class Authentication extends Controller {
-
-	static final private ConnectorConfig config;
-	
-	static {
-		config = new ConnectorConfig();
-		config.setOauthKey(System.getenv("FORCE_OAUTH_KEY"));
-		config.setOauthSecret(System.getenv("FORCE_OAUTH_SECRET"));
-		config.setOauthRedirectUri(System.getenv("APP_URI")+"/_auth");
-	}
 	
     public static void index() {
-		ConnectorConfig c = Auth.completeOAuthWebServerFlow(config,params.get("code"));
-		
-		session.put("force_auth", c.getSessionId()+" "+c.getServiceHost());
+    	ApiSession s = Auth.completeOAuthWebServerFlow(new AuthorizationResponse()
+	        .apiConfig(new ApiConfig()
+	            .setClientId(System.getenv("FORCE_OAUTH_KEY"))
+	            .setClientSecret(System.getenv("FORCE_OAUTH_SECRET"))
+	            .setRedirectURI(System.getenv("APP_URI")+"/_auth"))
+	        .code(params.get("code")));
+
+		session.put("force_auth", s.getAccessToken()+" "+s.getApiEndpoint());
     	
 		redirect(params.get("state"));
     }

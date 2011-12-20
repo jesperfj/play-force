@@ -1,23 +1,17 @@
 package play.modules.force;
 
-import com.sforce.rest.*;
-import com.sforce.ws.ConnectorConfig;
+import com.force.api.*;
 
 public class Force {
-	public static final RestConnection restApi(play.mvc.Scope.Session session) {
-		try {
-			String[] parts = session.get("force_auth").split(" ");
-			ConnectorConfig c = new ConnectorConfig();
-			c.setOauthKey(System.getenv("FORCE_OAUTH_KEY"));
-			c.setOauthSecret(System.getenv("FORCE_OAUTH_SECRET"));
-			c.setOauthRedirectUri(System.getenv("APP_URI")+"/_auth");
-			c.setSessionId(parts[0]);
-			c.setServiceHost(parts[1]);
-			c.setRestEndpoint(parts[1]+"/services/data/v23.0/");
-			return new RestConnectionImpl(c);
-		}
-		catch(RestApiException e) {
-			throw new RuntimeException(e);
-		}
+	public static final ForceApi forceApi(play.mvc.Scope.Session session) {
+		String[] parts = session.get("force_auth").split(" ");
+		return new ForceApi(
+			new ApiConfig()
+				.setClientId(System.getenv("FORCE_OAUTH_KEY"))
+				.setClientSecret(System.getenv("FORCE_OAUTH_SECRET"))
+				.setRedirectURI(System.getenv("APP_URI")+"/_auth"),
+			new ApiSession()
+				.setAccessToken(parts[0])
+				.setApiEndpoint(parts[1]));
 	}
 }

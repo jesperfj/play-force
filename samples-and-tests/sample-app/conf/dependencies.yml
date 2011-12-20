@@ -2,11 +2,11 @@
 
 require:
     - play
-    - play -> force 0.1
+    - force -> force 0.2
     
 repositories:
-    - My modules:
+    - MyModules:
         type:       local
         artifact:   "${application.path}/../../dist/[module]-[revision].zip"
         contains:
-            - play -> force *
+            - force -> force 0.2

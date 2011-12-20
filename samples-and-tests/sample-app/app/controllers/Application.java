@@ -1,30 +1,22 @@
 package controllers;
 
-import java.io.IOException;
+import java.util.List;
 
+import model.Account;
 import play.modules.force.Force;
 import play.mvc.Controller;
 import play.mvc.With;
 
-import com.sforce.rest.RestApiException;
-import com.sforce.rest.RestConnection;
+import com.force.api.ForceApi;
 
 
 @With(controllers.force.Secure.class)
 public class Application extends Controller {
 
     public static void index() {
-    	RestConnection rest = Force.restApi(session);
-    	try {
-			rest.describeGlobal();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RestApiException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        render();
+    	ForceApi api = Force.forceApi(session);
+    	List<Account> accounts = api.query("SELECT name FROM Account",Account.class).getRecords();
+        render(accounts);
     }
 
 }
