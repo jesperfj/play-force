@@ -8,7 +8,7 @@ Add the module as a dependency in <code>conf/dependencies.yml</code>
 
 <pre><code>require:
     - play
-    - force -> 0.1
+    - force -> 0.2
 </code></pre>
 
 Now you can write a secured controller like this:
@@ -22,12 +22,14 @@ import play.mvc.*;
 public class Application extends Controller {
 
     public static void index() {
-    	System.out.println("Hello: "+Force.dataApi(session).getIdentity().getFirstName());
+    	System.out.println("Hello: "+Force.forceApi(session).getIdentity().getFirstName());
     }
 }
 </code></pre>
 
 The user will be redirected to log in at Force.com and once authenticated, the Play! application can access the Force.com API on behalf of the user.
+
+The module gives access to all the functionality of the Force.com REST API Java library. That library itself is currently under development but it has support for basic CRUD and query operations. See <a href="https://github.com/jesperfj/force-rest-api">the README on github</a> for details on what you can do.
 
 h2. Reserved Routes
 
