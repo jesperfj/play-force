@@ -4,21 +4,14 @@
 
 This module is not yet registered as an official Play! module and it depends on a fork of the Force.com WSC module. So here's how to build it and test it:
 
-## Clone this repo and submodules
+## Clone this repo
 
-    $ git clone --recursive git@github.com:jesperfj/force-play-module.git
+    $ git clone git@github.com:jesperfj/force-play-module.git force
 
-## Build the forked version of WSC
+## Build the module
 
-    $ cd force-play-module/wsc
-    $ mvn install
-
-(comment out the gpg plugin in `pom.xml` if you don't want to deal with it)
-
-## Build the Play! module
-
-    $ cd ..
-    $ play deps --sync && play build-module
+    $ cd force
+    $ play deps && play build-module
 
 ## Set up OAuth config
 
