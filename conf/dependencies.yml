@@ -1,12 +1,12 @@
-self: play -> force 0.3
+self: play -> force 0.5
 
 require:
     - play 1.2.4
-    - com.force.api -> force-rest-api 0.0.7
+    - com.force.api -> force-rest-api 0.0.15
 
 repositories:
     - forcerestapi:
         type: iBiblio
         root: "http://jesperfj.github.com/force-rest-api/repository/"
         contains:
-            - com.force.api -> force-rest-api
+            - com.force.api -> force-rest-api 
