@@ -24,7 +24,7 @@ $ export FORCE_OAUTH_SECRET="302832..."
 $ export APP_URI="http://localhost:5000/_auth"
 </code></pre>
 
-These are just examples. You must provide your own. The syntax here is Unix style, use Windows style if you're on Windows.
+These are just example values. You must provide your own values. The syntax here is Unix style, use Windows style if you're on Windows.
 
 Now you can write a secured controller like this:
 
