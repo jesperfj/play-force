@@ -1,6 +1,6 @@
 h1. Force.com Play! Module
 
-The Force.com Play! module allows you to easily build Play applications for Force.com users. The module provides Force.com authentication (using OAuth2) and a connector for the REST API.
+The Force.com Play! module allows you to easily build Play! applications that integrates with Force.com. The module provides Force.com authentication (using OAuth2) and a connector for the REST API.
 
 h2. Prerequisites
 
@@ -10,25 +10,23 @@ To use this module, you'll need to set up a Force.com developer account and crea
 
 h2. Usage
 
-Add the module as a dependency in <code>conf/dependencies.yml</code>
+Add the module as a dependency in @conf/dependencies.yml@
 
-<pre><code>require:
+bc.. require:
     - play
-    - force -> 0.6
-</code></pre>
+    - play -> force
 
-and run <code>play deps</code> on your project. You must provide the oauth key, oauth secret and application base URI as environment variables:
+p. and run @play deps@ on your project. You must provide the oauth key, oauth secret and application base URI as environment variables:
 
-<pre><code>$ export FORCE_OAUTH_KEY="dHR383djddd3..."
+bc.. $ export FORCE_OAUTH_KEY="dHR383djddd3..."
 $ export FORCE_OAUTH_SECRET="302832..."
 $ export APP_URI="http://localhost:5000/_auth"
-</code></pre>
 
-These are just examples. You must provide your own. The syntax here is Unix style, use Windows style if you're on Windows.
+p. These are just example values. You must provide your own values. The syntax here is Unix style, use Windows style if you're on Windows.
 
 Now you can write a secured controller like this:
 
-<pre><code>package controllers;
+bc.. package controllers;
 
 import com.force.api.Identity;
 import controllers.force.ForceController;
@@ -42,11 +40,10 @@ public class Application extends ForceController {
     }
     
 }
-</code></pre>
 
-with an <code>index.html</code> template like this:
+p. with an @index.html@ template like this:
 
-<pre><code>#{extends 'main.html' /}
+bc.. #{extends 'main.html' /}
 #{set title:'Home' /}
 
 <h1>Welcome ${identity.firstName} ${identity.lastName}</h1>
@@ -55,17 +52,22 @@ with an <code>index.html</code> template like this:
 You are logged in as ${identity.username} in the org with id ${identity.organizationId}
 </p>
 ...
-</code></pre>
 
-The user will be redirected to log in at Force.com and once authenticated, the Play! application can access the Force.com API on behalf of the user.
+p. The user will be redirected to log in at Force.com and once authenticated, the Play! application can access the Force.com API on behalf of the user.
 
-The module gives access to all the functionality of the Force.com REST API Java library. That library itself is still under development but it has support for basic CRUD and query operations. See <a href="https://github.com/jesperfj/force-rest-api">the README on github</a> for details on what you can do with the library.
+The module gives access to all the functionality of the Force.com REST API Java library. That library itself is still under development but it has support for basic CRUD and query operations. See the "github project":https://github.com/jesperfj/force-rest-api for details on what you can do with the library.
+
+h2. Sample App
+
+You can find a sample app that demonstrates use of this module "here on github":https://github.com/jesperfj/play-force-sample. To test it out, first clone it
+
+bc.. $ git clone https://github.com/jesperfj/play-force-sample.git
 
 h2. ForceController as Mix-in
 
-You don't have to extend from <code>ForceController</code>. You can also apply it as a mix-in with the <code>@With</code> annotation like this:
+You don't have to extend from @ForceController@. You can also apply it as a mix-in with the <code>@With</code> annotation like this:
 
-<pre><code>package controllers;
+bc.. package controllers;
 
 import com.force.api.Identity;
 import controllers.force.ForceController;
@@ -83,11 +85,11 @@ public class Application  {
     }
     
 }
-</code></pre>
-
-
 
 h2. Reserved Routes
 
-The module will automatically add a new route on <code>/_auth</code>. Your application must not route to this path. It is reserved for the OAuth authentication flow.
+The module will automatically add a new route on @/_auth@. Your application must not route to this path. It is reserved for the OAuth authentication flow.
 
+h2. Advanced Scenarios
+
+This module is designed to get you started quickly with Force.com Play! apps. If you want more control over what happens during the authentication loop, e.g. if you want to load and cache more data when the user is authenticated, then you can simply use the Force.com REST API directly from your Play! application and manually implement the authentication methods currently implemented by ParentController in this module. Feel free to base your code on the code in this module. You can find it "here on github":https://github.com/jesperfj/play-force.
