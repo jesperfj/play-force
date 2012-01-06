@@ -1,6 +1,6 @@
 h1. Force.com Play! Module
 
-The Force.com Play! module allows you to easily build Play applications for Force.com users. The module provides Force.com authentication (using OAuth2) and a connector for the REST API.
+The Force.com Play! module allows you to easily build Play! applications that integrates with Force.com. The module provides Force.com authentication (using OAuth2) and a connector for the REST API.
 
 h2. Prerequisites
 
