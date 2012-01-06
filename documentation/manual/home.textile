@@ -59,9 +59,84 @@ The module gives access to all the functionality of the Force.com REST API Java 
 
 h2. Sample App
 
-You can find a sample app that demonstrates use of this module "here on github":https://github.com/jesperfj/play-force-sample. To test it out, first clone it
+You can find a sample app that demonstrates use of this module "here on github":https://github.com/jesperfj/play-force-sample. To test it out, clone the repo
 
 bc.. $ git clone https://github.com/jesperfj/play-force-sample.git
+
+p. then resolve dependencies
+
+bc.. $ play deps
+~        _            _ 
+~  _ __ | | __ _ _  _| |
+~ | '_ \| |/ _' | || |_|
+~ |  __/|_|\____|\__ (_)
+~ |_|            |__/   
+~
+~ play! 1.2.4, http://www.playframework.org
+~
+:: loading settings :: file = /Users/jjoergensen/.ivy2/ivysettings.xml
+~ Resolving dependencies using /Users/jjoergensen/dev/play-force-sample/conf/dependencies.yml,
+~
+~     play->force 0.6 (from playContributedModules)
+~
+~ Downloading required dependencies,
+~
+~ 	downloaded http://www.playframework.org/modules/force-0.6.zip                          
+~
+~ Installing resolved dependencies,
+~
+~ 	modules/force-0.6
+~
+~ Done!
+~
+
+p. Set environment variables as described above. You can use the @env.sample@ file as template. Now you can start the app with @play run@ as usual. At all times, the callback URL in the oauth configuration in Force.com must match the URL of your app. So if you run on localhost, the callback URL must be http://localhost:<port>/_auth. The callback URL must always be an https URL, *except* if it's a localhost URL. So if you run it on another server or cloud like Heroku, you must use https.
+
+h3. Test the sample on Heroku
+
+Assuming you already have a Heroku account and have installed the Heroku toolbelt, create a new app on Heroku:
+
+bc.. $ heroku create --stack cedar
+Creating deep-warrior-1867... done, stack is cedar
+http://deep-warrior-1867.herokuapp.com/ | git@heroku.com:deep-warrior-1867.git
+Git remote heroku added
+
+p. Next, add free "piggyback" SSL to the app:
+
+bc.. $ heroku addons:add piggyback_ssl
+-----> Adding ssl to deep-warrior-1867...done.
+
+p. Because the callback URL is different when you deploy your application somewhere else, you will need two OAuth consumers, one for localhost testing and one for the deployed app. So first, "configure another OAuth consumer":force-setup.textile and then set the parameters on your heroku app:
+
+bc.. $ heroku config:add \
+>         FORCE_OAUTH_KEY="3MVG9yZ.WNe..." \
+>         FORCE_OAUTH_SECRET=1159294729472945253 \
+>         APP_URI="https://deep-warrior-1867.herokuapp.com"
+Adding config vars and restarting app... done, v1
+  APP_URI            => https://deep-war...67.herokuapp.com
+  FORCE_OAUTH_KEY    => 3MVG9yZ.WNe6byQA...GaqRMILsoIZTPzlY
+  FORCE_OAUTH_SECRET => 1159294729472945253
+
+p. Now you can push your app to Heroku:
+
+bc.. $ git push heroku master
+Counting objects: 37, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (30/30), done.
+Writing objects: 100% (37/37), 37.30 KiB, done.
+Total 37 (delta 4), reused 0 (delta 0)
+
+-----> Heroku receiving push
+-----> Play! app detected
+...
+-----> Launching... done, v4
+       http://deep-warrior-1867.herokuapp.com deployed to Heroku
+
+p. Test the app with
+
+bc.. $ heroku open
+
+p. which will open the app URL in your default browser.
 
 h2. ForceController as Mix-in
 
