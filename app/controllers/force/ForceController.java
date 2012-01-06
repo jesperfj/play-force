@@ -40,7 +40,7 @@ public class ForceController extends Controller {
     }
 
 
-    protected static ForceApi forceApi() {
+    public static ForceApi api() {
         String[] parts = session.get("force_auth").split(" ");
         return new ForceApi(API_CONFIG,new ApiSession()
             .setAccessToken(parts[0])
