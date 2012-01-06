@@ -4,9 +4,9 @@ The Force.com Play! module allows you to easily build Play applications for Forc
 
 h2. Prerequisites
 
-To you this module, you'll need to set up a Force.com developer account and create a Force.com Remote Access Application (OAuth Consumer).
+To use this module, you'll need to set up a Force.com developer account and create a Force.com Remote Access Application (OAuth Consumer).
 
-* Read more
+* "Read more":force-setup.textile
 
 h2. Usage
 
@@ -17,21 +17,14 @@ Add the module as a dependency in <code>conf/dependencies.yml</code>
     - force -> 0.6
 </code></pre>
 
-and run <code>play deps</code> on your project. The module requires 3 environment variables set: 
+and run <code>play deps</code> on your project. You must provide the oauth key, oauth secret and application base URI as environment variables:
 
-<code>FORCE_OAUTH_KEY</code>: Force.com OAuth key a.k.a. Consumer Key
-<code>FORCE_OAUTH_SECRET</code>: Force.com OAuth secret a.k.a. Consumer Secret 
-<code>APP_URI</code>: The base URI for your application, e.g. http://localhost:9000 for testing or https://www.mydomain.com for your production app. Note, for production, your app must be accessed using https. Otherwise OAuth handshakes are rejected by Force.com.
+<pre><code>$ export FORCE_OAUTH_KEY="dHR383djddd3..."
+$ export FORCE_OAUTH_SECRET="302832..."
+$ export APP_URI="http://localhost:5000/_auth"
+</code></pre>
 
-You can set them manually using
-<code><pre>    $ export FORCE_OAUTH_KEY="..."
-</pre></code>
-etc. or the Windows equivalent. If you are using foreman/Procfile, you can also add them to a <code>.env</code> file in your project directory. Foreman will automatically pick them up from there. The sample project has an <code>env.sample</code> file you can use as template:
-
-<code><pre>FORCE_OAUTH_KEY=<your oauth key>
-FORCE_OAUTH_SECRET=<your oauth secret>
-APP_URI=http://localhost:5000
-</pre></code>
+These are just examples. You must provide your own. The syntax here is Unix style, use Windows style if you're on Windows.
 
 Now you can write a secured controller like this:
 
