@@ -6,9 +6,9 @@ Force.com developer accounts are free. <a href="http://developer.force.com/signu
 
 h2. Create an OAuth client
 
-* Log into your developer account and go to remote access under setup -> develop -> remote access. <a href="https://login.salesforce.com/?startURL=/888">Direct Link</a>
-* Click New
-* Set callback url to the base URI of your app plus <code>/_auth</code> e.g. <code>https://www.mydomain.com/_auth</code>. This must be a secure URL (https), unless it's a localhost URL, e.g. <code>http://localhost:9000/_auth</code>
-* Set a descriptive name. This will be shown to users who authenticate
-* Set your contact email and click Save
-* On the result page, the Consumer Key is your OAuth key and the Consumer Secret is your OAuth secret.
+# Log into your developer account and go to remote access under setup -> develop -> remote access. <a href="https://login.salesforce.com/?startURL=/888">Direct Link</a>
+# Click New
+# Set callback url to the base URI of your app plus <code>/_auth</code> e.g. <code>https://www.mydomain.com/_auth</code>. This must be a secure URL (https), unless it's a localhost URL, e.g. <code>http://localhost:9000/_auth</code>
+# Set a descriptive name. This will be shown to users who authenticate
+# Set your contact email and click Save
+# On the result page, the Consumer Key is your OAuth key and the Consumer Secret is your OAuth secret.
