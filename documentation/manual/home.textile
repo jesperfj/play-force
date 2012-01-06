@@ -14,7 +14,7 @@ Add the module as a dependency in <code>conf/dependencies.yml</code>
 
 <pre><code>require:
     - play
-    - force -> 0.6
+    - play -> force
 </code></pre>
 
 and run <code>play deps</code> on your project. You must provide the oauth key, oauth secret and application base URI as environment variables:
