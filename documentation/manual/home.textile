@@ -93,7 +93,7 @@ The module will automatically add a new route on <code>/_auth</code>. Your appli
 
 h2. Advanced Scenarios
 
-This module is designed to get you started quickly with Force.com Play! apps. If you want more control over what happens during the authentication loop, e.g. if you want to load and cache more data when the user is authenticated, then you can simply use the Force.com REST API directly from your Play! application and manually implement the authentication methods. Feel free to base your code on the code in this module. You can find it "here on github":https://github.com/jesperfj/play-force.
+This module is designed to get you started quickly with Force.com Play! apps. If you want more control over what happens during the authentication loop, e.g. if you want to load and cache more data when the user is authenticated, then you can simply use the Force.com REST API directly from your Play! application and manually implement the authentication methods instead of using this module. Feel free to base your code on the code in this module. You can find it "here on github":https://github.com/jesperfj/play-force.
 
 To include the force-rest-api library directly in your play app, add the following to your <code>conf/dependencies.yml</code>
 
