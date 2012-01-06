@@ -6,7 +6,7 @@ h2. Prerequisites
 
 To use this module, you'll need to set up a Force.com developer account and create a Force.com Remote Access Application (OAuth Consumer).
 
-* "Read more":force-setup.textile
+* "Read more":force-setup
 
 h2. Usage
 
@@ -20,7 +20,7 @@ p. and run @play deps@ on your project. You must provide the oauth key, oauth se
 
 bc.. $ export FORCE_OAUTH_KEY="dHR383djddd3..."
 $ export FORCE_OAUTH_SECRET="302832..."
-$ export APP_URI="http://localhost:5000/_auth"
+$ export APP_URI="http://localhost:5000"
 
 p. These are just example values. You must provide your own values. The syntax here is Unix style, use Windows style if you're on Windows.
 
@@ -106,11 +106,11 @@ p. Next, add free "piggyback" SSL to the app:
 bc.. $ heroku addons:add piggyback_ssl
 -----> Adding ssl to deep-warrior-1867...done.
 
-p. Because the callback URL is different when you deploy your application somewhere else, you will need two OAuth consumers, one for localhost testing and one for the deployed app. So first, "configure another OAuth consumer":force-setup.textile and then set the parameters on your heroku app:
+p. Because the callback URL is different when you deploy your application somewhere else, you will need two OAuth consumers, one for localhost testing and one for the deployed app. So first, "configure another OAuth consumer":force-setup and then set the parameters on your heroku app:
 
 bc.. $ heroku config:add \
 >         FORCE_OAUTH_KEY="3MVG9yZ.WNe..." \
->         FORCE_OAUTH_SECRET=1159294729472945253 \
+>         FORCE_OAUTH_SECRET="1159294729472945253" \
 >         APP_URI="https://deep-warrior-1867.herokuapp.com"
 Adding config vars and restarting app... done, v1
   APP_URI            => https://deep-war...67.herokuapp.com
