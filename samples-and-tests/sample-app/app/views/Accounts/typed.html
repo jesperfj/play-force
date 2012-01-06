@@ -1,0 +1,11 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<!--  This template renders a list of Account object instances -->
+<a href="untyped">Untyped</a>
+<h1>All Accounts</h1>
+<ul>
+	#{list items:accounts, as:'account'}
+		<li>${account.name}</li>
+	#{/list}
+</ul>

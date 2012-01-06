@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<!-- This template renders a List of maps generated directly by Jackson's deserializers from the Force.com REST API
+     Force.com uses capitalized parameter names. That's why the name field is capitalized below. But otherwise
+     the template looks exactly the same as when rendering a typed class. -->
+<a href="typed">Typed</a>
+<h1>All Accounts</h1>
+<ul>
+	#{list items:accounts, as:'account'}
+		<li>${account.Name}</li>
+	#{/list}
+</ul>

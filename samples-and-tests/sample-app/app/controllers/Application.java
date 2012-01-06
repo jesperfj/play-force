@@ -1,10 +1,6 @@
 package controllers;
 
-import java.util.List;
-
-import model.Account;
-
-import com.force.api.ForceApi;
+import com.force.api.Identity;
 
 import controllers.force.ForceController;
 
@@ -12,8 +8,9 @@ import controllers.force.ForceController;
 public class Application extends ForceController {
 
     public static void index() {
-    	List<Account> accounts = forceApi().query("SELECT name FROM Account",Account.class).getRecords();
-        render(accounts);
+        Identity identity = api().getIdentity();
+        
+        render(identity);
     }
-
+    
 }
