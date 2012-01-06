@@ -1,6 +1,12 @@
 h1. Force.com Play! Module
 
-The Force.com Play! module allows you to easily build Play applications for Force.com users. The module provides Force.com authentication (using OAuth2) and a connector for the REST API. The module is currently in an early development stage.
+The Force.com Play! module allows you to easily build Play applications for Force.com users. The module provides Force.com authentication (using OAuth2) and a connector for the REST API.
+
+h2. Prerequisites
+
+To you this module, you'll need to set up a Force.com developer account and create a Force.com Remote Access Application (OAuth Consumer).
+
+* Read more
 
 h2. Usage
 
@@ -8,28 +14,85 @@ Add the module as a dependency in <code>conf/dependencies.yml</code>
 
 <pre><code>require:
     - play
-    - force -> 0.2
+    - force -> 0.6
 </code></pre>
+
+and run <code>play deps</code> on your project. The module requires 3 environment variables set: 
+
+<code>FORCE_OAUTH_KEY</code>: Force.com OAuth key a.k.a. Consumer Key
+<code>FORCE_OAUTH_SECRET</code>: Force.com OAuth secret a.k.a. Consumer Secret 
+<code>APP_URI</code>: The base URI for your application, e.g. http://localhost:9000 for testing or https://www.mydomain.com for your production app. Note, for production, your app must be accessed using https. Otherwise OAuth handshakes are rejected by Force.com.
+
+You can set them manually using
+<code><pre>    $ export FORCE_OAUTH_KEY="..."
+</pre></code>
+etc. or the Windows equivalent. If you are using foreman/Procfile, you can also add them to a <code>.env</code> file in your project directory. Foreman will automatically pick them up from there. The sample project has an <code>env.sample</code> file you can use as template:
+
+<code><pre>FORCE_OAUTH_KEY=<your oauth key>
+FORCE_OAUTH_SECRET=<your oauth secret>
+APP_URI=http://localhost:5000
+</pre></code>
 
 Now you can write a secured controller like this:
 
 <pre><code>package controllers;
 
-import play.modules.force.Force;
-import play.mvc.*;
+import com.force.api.Identity;
+import controllers.force.ForceController;
 
-@With(controllers.force.Secure.class)
-public class Application extends Controller {
+public class Application extends ForceController {
 
     public static void index() {
-    	System.out.println("Hello: "+Force.forceApi(session).getIdentity().getFirstName());
+        Identity identity = api().getIdentity();
+        
+        render(identity);
     }
+    
 }
+</code></pre>
+
+with an <code>index.html</code> template like this:
+
+<pre><code>#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h1>Welcome ${identity.firstName} ${identity.lastName}</h1>
+
+<p>
+You are logged in as ${identity.username} in the org with id ${identity.organizationId}
+</p>
+...
 </code></pre>
 
 The user will be redirected to log in at Force.com and once authenticated, the Play! application can access the Force.com API on behalf of the user.
 
-The module gives access to all the functionality of the Force.com REST API Java library. That library itself is currently under development but it has support for basic CRUD and query operations. See <a href="https://github.com/jesperfj/force-rest-api">the README on github</a> for details on what you can do.
+The module gives access to all the functionality of the Force.com REST API Java library. That library itself is still under development but it has support for basic CRUD and query operations. See <a href="https://github.com/jesperfj/force-rest-api">the README on github</a> for details on what you can do with the library.
+
+h2. ForceController as Mix-in
+
+You don't have to extend from <code>ForceController</code>. You can also apply it as a mix-in with the <code>@With</code> annotation like this:
+
+<pre><code>package controllers;
+
+import com.force.api.Identity;
+import controllers.force.ForceController;
+
+@With(ForceController.class)
+public class Application  {
+    
+    private static void api() {
+        return ForceController.api();
+    }
+
+    public static void index() {
+        Identity identity = api().getIdentity();
+        render(identity);
+    }
+    
+}
+</code></pre>
+
+
 
 h2. Reserved Routes
 
