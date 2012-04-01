@@ -22,17 +22,16 @@ public class ForceController extends Controller {
         .setClientId(FORCE_OAUTH_KEY)
         .setClientSecret(FORCE_OAUTH_SECRET)
         .setRedirectURI(APP_URI+"/_auth")
-        //Set the 'loginEndpoint' parameter if passed in the 'request', else use the default.
     	.setLoginEndpoint((params.get("loginEndpoint") !=null) ? params.get("loginEndpoint") :ENDPOINT_PROD );
 
     @Before
 	public static void checkAuthenticated() {
     	
 		if(session.get("force_auth")==null) {
+	    	//TODO: Change scope() to use Enum
 			redirect(Auth.startOAuthWebServerFlow(new AuthorizationRequest()
 		    	.apiConfig(API_CONFIG)
-		    	//Commented until "Scope" changes make it to force-rest-api 
-		    	//.scope(params.get("scope")!=null?params.get("scope"):Scope.)
+		    	.scope(params.get("scope")!=null?params.get("scope"):"full")
 		    	.display(params.get("display")!=null?Display.valueOf(params.get("display")):Display.PAGE)
 		    	.state(APP_URI+request.url)));
 		}
