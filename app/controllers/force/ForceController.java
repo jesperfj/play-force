@@ -18,6 +18,7 @@ public class ForceController extends Controller {
     protected static final String FORCE_OAUTH_KEY    = System.getenv("FORCE_OAUTH_KEY");
     protected static final String FORCE_OAUTH_SECRET = System.getenv("FORCE_OAUTH_SECRET");
     protected static final String ENDPOINT_PROD = "https://login.salesforce.com";
+    protected static final boolean ON_LOCALHOST      = APP_URI.startsWith("http://localhost");
     protected static final ApiConfig API_CONFIG = new ApiConfig()
         .setClientId(FORCE_OAUTH_KEY)
         .setClientSecret(FORCE_OAUTH_SECRET)
@@ -26,7 +27,10 @@ public class ForceController extends Controller {
 
     @Before
 	public static void checkAuthenticated() {
-    	
+        if(!ON_LOCALHOST && request.headers.get("x-forwarded-proto")!=null && !request.headers.get("x-forwarded-proto").values.contains("https")) {
+            redirect(APP_URI+request.url);
+            return;
+        }
 		if(session.get("force_auth")==null) {
 	    	//TODO: Change scope() to use Enum
 			redirect(Auth.startOAuthWebServerFlow(new AuthorizationRequest()
