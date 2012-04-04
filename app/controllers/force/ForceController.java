@@ -29,10 +29,10 @@ public class ForceController extends Controller {
             return;
         }
 		if(session.get("force_auth")==null) {
-	    	//TODO: Change scope() to use Enum
 			redirect(Auth.startOAuthWebServerFlow(new AuthorizationRequest()
 		    	.apiConfig(API_CONFIG)
-		    	.scope(params.get("scope")!=null?params.get("scope"):"full")
+		    	//Commented until "Scope" changes make it to force-rest-api 
+		    	//.scope(params.get("scope")!=null?params.get("scope"):Scope.)
 		    	.display(params.get("display")!=null?Display.valueOf(params.get("display")):Display.PAGE)
 		    	.state(APP_URI+request.url)));
 		}
