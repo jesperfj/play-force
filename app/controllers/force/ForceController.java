@@ -9,7 +9,6 @@ import com.force.api.ApiSession;
 import com.force.api.ApiTokenException;
 import com.force.api.Auth;
 import com.force.api.AuthorizationRequest;
-import com.force.api.AuthorizationRequest.Display;
 import com.force.api.ForceApi;
 
 public class ForceController extends Controller {
@@ -17,13 +16,11 @@ public class ForceController extends Controller {
 	protected static final String APP_URI            = System.getenv("APP_URI");
     protected static final String FORCE_OAUTH_KEY    = System.getenv("FORCE_OAUTH_KEY");
     protected static final String FORCE_OAUTH_SECRET = System.getenv("FORCE_OAUTH_SECRET");
-    protected static final String ENDPOINT_PROD = "https://login.salesforce.com";
     protected static final boolean ON_LOCALHOST      = APP_URI.startsWith("http://localhost");
     protected static final ApiConfig API_CONFIG = new ApiConfig()
         .setClientId(FORCE_OAUTH_KEY)
         .setClientSecret(FORCE_OAUTH_SECRET)
-        .setRedirectURI(APP_URI+"/_auth")
-    	.setLoginEndpoint((params.get("loginEndpoint") !=null) ? params.get("loginEndpoint") :ENDPOINT_PROD );
+        .setRedirectURI(APP_URI+"/_auth");
 
     @Before
 	public static void checkAuthenticated() {
