@@ -30,7 +30,7 @@ public class ForceController extends Controller {
         }
 		if(session.get("force_auth")==null) {
 			redirect(Auth.startOAuthWebServerFlow(new AuthorizationRequest()
-		    	.apiConfig(API_CONFIG)
+		    	.apiConfig(getConfig())
 		    	//Commented until "Scope" changes make it to force-rest-api 
 		    	//.scope(params.get("scope")!=null?params.get("scope"):Scope.)
 		    	.display(params.get("display")!=null?Display.valueOf(params.get("display")):Display.PAGE)
@@ -53,4 +53,10 @@ public class ForceController extends Controller {
             .setApiEndpoint(parts[1]));
     }
 
+    /**
+     * Allows subclasses to override the ApiConfig as needed.
+     */
+    public ApiConfig getConfig(){
+    	return API_CONFIG;
+    }
 }
