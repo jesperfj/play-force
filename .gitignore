@@ -8,3 +8,5 @@
 /modules
 /tmp
 /repo
+conf/application.conf
+conf/routes
