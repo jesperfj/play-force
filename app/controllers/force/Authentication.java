@@ -17,7 +17,7 @@ public class Authentication extends Controller {
 	            .setRedirectURI(System.getenv("APP_URI")+"/_auth"))
 	        .code(params.get("code")));
 
-		session.put("force_auth", s.getAccessToken()+" "+s.getApiEndpoint());
+		session.put("force_auth", s.getAccessToken()+" "+s.getApiEndpoint()+" "+s.getRefreshToken());
     	
 		redirect(params.get("state"));
     }
